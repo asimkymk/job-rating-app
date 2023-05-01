@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Button from './Button';
-import FeedbackForm from './FeedbackForm';
+import Button from '../components/Button';
+import FeedbackForm from '../components/FeedbackForm';
 
 const HomeScreen = () => {
   return (

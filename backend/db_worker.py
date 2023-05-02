@@ -1,10 +1,13 @@
 import sqlite3
 from sqlite3 import Error
+import os
 
+current_dir = os.getcwd()
+print("Şu anki çalışma dizini:", current_dir)
 def create_connection():
     conn = None
     try:
-        conn = sqlite3.connect('./backend/db/all_data.db')
+        conn = sqlite3.connect('./db/all_data.db')
         return conn
     
     except Error as e:
@@ -12,12 +15,8 @@ def create_connection():
 
     return conn
 
-def close_connection(con):
-    try:
-        con.close()
-    except:
-        return False
-    return True
+def close_connection(conn):
+    conn.close()
 
 def create_users_table(conn):
     try:
@@ -30,7 +29,7 @@ def create_users_table(conn):
                 email TEXT UNIQUE,
                 name TEXT NOT NULL,
                 surname TEXT NOT NULL,
-                birtYear INTEGER NOT NULL
+                birthYear INTEGER NOT NULL
             );
         """)
         print("users table created successfully")
@@ -83,7 +82,7 @@ def add_user(conn, username, password, email, name, surname, birth_year):
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            INSERT INTO User(username, password, email, name, surname, birthYear)
+            INSERT INTO users(username, password, email, name, surname, birthYear)
             VALUES(?, ?, ?, ?, ?, ?)
         """, (username, password, email, name, surname, birth_year))
         conn.commit()
@@ -139,9 +138,12 @@ def get_user(conn, username, password):
     cursor.execute("""
         SELECT * FROM users WHERE username = ? AND password = ?;
     """, (username, password))
-    rows = cursor.fet
-    for row in rows:
-        print(row)
+    user = cursor.fetchone()
+    print(user)
+    if user:
+        return user
+    else:
+        return False
 
 def get_job(conn, user_id):
     try:
@@ -149,8 +151,11 @@ def get_job(conn, user_id):
         cursor.execute("""
             SELECT * FROM jobs WHERE employer_id = ? OR employee_id = ?;
         """, (user_id,user_id,))
-        user = cursor.one()
-        return user
+        rows = cursor.fetchall()
+        if rows:
+            return rows
+        else:
+            return []
     except:
         return False
     
@@ -200,3 +205,4 @@ def delete_feedbacks(conn, feedback_id):
     except:
         return False
     return True
+

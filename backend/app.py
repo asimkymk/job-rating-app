@@ -47,10 +47,15 @@ def login():
             "surname":user[5],
             "birthYear":user[6]
         }
-        return jsonify((dict_user)), 200
+        message = {
+            "message":"Success",
+            "data":dict_user
+        }
+        
+        return jsonify((message)), 200
     except Exception as e:
         print(e)
-        return jsonify({'error': 'Database error!'}), 400
+        return jsonify({'message': 'Error'}), 400
     
 
 @app.route('/user/signup', methods=['POST'])

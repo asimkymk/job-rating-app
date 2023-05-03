@@ -67,7 +67,7 @@ def create_feedbacks_table(conn):
             employer_id INTEGER NOT NULL,
             rate INTEGER NOT NULL,
             comment TEXT NOT NULL,
-            createdDate TEXT NOT NULL,
+            createDate TEXT NOT NULL,
             FOREIGN KEY (job_id) REFERENCES jobs (id),
             FOREIGN KEY (employer_id) REFERENCES users (id)
         );
@@ -118,13 +118,13 @@ def add_job(conn, employee_id, employer_id, title, description, create_date ):
         return False
     return True
 
-def add_feedback(conn, job_id, employer_id, rate, comment, createdDate):
+def add_feedback(conn, job_id, employer_id, rate, comment, createDate):
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            INSERT INTO feedbacks(job_id, employer_id, rate, comment, createdDate) 
+            INSERT INTO feedbacks(job_id, employer_id, rate, comment, createDate) 
             VALUES(?, ?, ?, ?, ?);
-        """, (job_id, employer_id, rate, comment, createdDate))
+        """, (job_id, employer_id, rate, comment, createDate))
         conn.commit()
         print("Feedback added successfully")
     except:

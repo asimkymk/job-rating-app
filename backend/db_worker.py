@@ -157,11 +157,11 @@ def get_job(conn, user_id):
     except:
         return False
     
-def get_feedback(conn, employer_id):
+def get_feedback(conn, job_id):
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT * FROM feedbacks WHERE employer_id = ?;
-    """, (employer_id,))
+        SELECT * FROM feedbacks WHERE job_id = ?;
+    """, (job_id,))
     rows = cursor.fetchall()
     if rows:
         return rows

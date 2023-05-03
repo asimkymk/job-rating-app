@@ -47,9 +47,7 @@ def create_jobs_table(conn):
                 employer_id INTEGER NOT NULL,
                 title TEXT NOT NULL,
                 description TEXT,
-                status TEXT NOT NULL,
                 createDate TEXT NOT NULL,
-                lastEditDate TEXT,
                 FOREIGN KEY (employee_id) REFERENCES users (id),
                 FOREIGN KEY (employer_id) REFERENCES users (id)
             );
@@ -92,13 +90,13 @@ def add_user(conn, username, password, email, name, surname, birth_year):
         return False
     return True
 
-def add_job(conn, employee_id, employer_id, title, description, status, create_date):
+def add_job(conn, employee_id, employer_id, title, description, create_date):
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            INSERT INTO jobs(employee_id, employer_id, title, description, status, createDate, lastEditDate)
-            VALUES(?, ?, ?, ?, ?, ?)
-        """, (employee_id, employer_id, title, description, status, create_date))
+            INSERT INTO jobs(employee_id, employer_id, title, description, createDate)
+            VALUES(?, ?, ?, ?, ?)
+        """, (employee_id, employer_id, title, description, create_date))
         conn.commit()
         print("Job added successfully")
     except Error as e:
@@ -106,13 +104,13 @@ def add_job(conn, employee_id, employer_id, title, description, status, create_d
         return False
     return True
 
-def add_job(conn, employee_id, employer_id, title, description, status, create_date, last_edit_date):
+def add_job(conn, employee_id, employer_id, title, description, create_date ):
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            INSERT INTO jobs(employee_id, employer_id, title, description, status, createDate, lastEditDate)
-            VALUES(?, ?, ?, ?, ?, ?, ?)
-        """, (employee_id, employer_id, title, description, status, create_date, last_edit_date))
+            INSERT INTO jobs(employee_id, employer_id, title, description, , createDate)
+            VALUES(?, ?, ?, ?, ?)
+        """, (employee_id, employer_id, title, description,  create_date))
         conn.commit()
         print("Job added successfully")
     except Error as e:

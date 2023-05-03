@@ -101,20 +101,6 @@ def add_job(conn, employee_id, employer_id, title, description, create_date):
         return False
     return True
 
-def add_job(conn, employee_id, employer_id, title, description, create_date ):
-    cursor = conn.cursor()
-    try:
-        cursor.execute("""
-            INSERT INTO jobs(employee_id, employer_id, title, description, , createDate)
-            VALUES(?, ?, ?, ?, ?)
-        """, (employee_id, employer_id, title, description,  create_date))
-        conn.commit()
-        print("Job added successfully")
-    except Error as e:
-        print(e)
-        return False
-    return True
-
 def add_feedback(conn, job_id, employer_id, rate, comment, createDate):
     cursor = conn.cursor()
     try:

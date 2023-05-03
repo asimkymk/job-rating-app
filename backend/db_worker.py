@@ -1,9 +1,6 @@
 import sqlite3
 from sqlite3 import Error
-import os
 
-current_dir = os.getcwd()
-print("Şu anki çalışma dizini:", current_dir)
 def create_connection():
     conn = None
     try:

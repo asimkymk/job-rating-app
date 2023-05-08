@@ -8,11 +8,9 @@ export default function Login({ navigation }) {
     const [password, setPassword] = useState('');
     function username_handler(text) {
         setUsername(text)
-        console.log(text)
     }
     function password_handler(text) {
         setPassword(text)
-        console.log(text)
     }
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0 }}>

@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
     employeeText: {
         color: '#5093fe',
         fontSize: 13,
-        fontFamily: 'Roboto-Medium'
+        fontFamily: 'Roboto-Regular'
     }
 });

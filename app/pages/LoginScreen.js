@@ -149,6 +149,6 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 14,
         color: '#0644a3',
-        fontFamily: 'Roboto-Medium'
+        fontFamily: 'Roboto-Regular'
     }
 });

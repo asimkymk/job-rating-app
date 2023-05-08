@@ -3,11 +3,19 @@ import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    function username_handler(text) {
+        setUsername(text)
+        console.log(text)
+    }
+    function password_handler(text) {
+        setPassword(text)
+        console.log(text)
+    }
     return (
-        <View style={{ flex:1,justifyContent: 'center', alignItems: 'center', marginTop: 0 }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0 }}>
             <Image
                 style={styles.loginImage}
                 //blurRadius={3}
@@ -22,9 +30,10 @@ export default function Login({navigation}) {
                 <Text style={styles.welcomeText}>Giriş Yap</Text>
 
                 <InputField
+                    onChangeText={text => username_handler(text)}
                     label={'Kullanıcı adın'}
                     //onChangeText={(username) => setUsername(username)}
-
+                    value={username}
                     icon={
                         <Ionicons
                             name="person-outline"
@@ -36,6 +45,8 @@ export default function Login({navigation}) {
                 />
 
                 <InputField
+                    onChangeText={text => password_handler(text)}
+                    value={password}
                     label={'Şifren'}
                     icon={
                         <Ionicons
@@ -49,9 +60,11 @@ export default function Login({navigation}) {
                 />
 
                 <TouchableOpacity style={styles.loginBtn}
-                onPress={() =>
-                    navigation.navigate('Home')
-                  }
+                    onPress={() => {
+                        console.log(username)
+                        console.log(password)
+                        navigation.navigate('Home')}
+                    }
                 >
                     <Text style={styles.loginText}>GİRİŞ</Text>
                 </TouchableOpacity>
@@ -80,7 +93,7 @@ const styles = StyleSheet.create({
         paddingBottom: 450
     },
     container: {
-        flex:1,
+        flex: 1,
         paddingTop: 40,
         marginTop: -30,
         width: '100%',
@@ -98,7 +111,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 25,
         color: '#0644a3',
-        fontFamily:'Roboto-Bold'
+        fontFamily: 'Roboto-Bold'
     },
     inputView: {
         borderRadius: 5,
@@ -126,18 +139,18 @@ const styles = StyleSheet.create({
     loginText: {
         color: '#0644a3',
         fontSize: 16,
-        fontFamily:'Roboto-Bold'
+        fontFamily: 'Roboto-Bold'
     },
-    registerBtn:{
-        marginTop:10,
-        marginRight:50,
-        alignSelf:'flex-end',
-        
+    registerBtn: {
+        marginTop: 10,
+        marginRight: 50,
+        alignSelf: 'flex-end',
+
     },
-    registerText:{
+    registerText: {
         color: 'black',
         fontSize: 14,
         color: '#0644a3',
-        fontFamily:'Roboto-Medium'
+        fontFamily: 'Roboto-Medium'
     }
 });

@@ -1,8 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Login from './app/pages/login';
+import Login from './app/pages/LoginScreen';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Home from './app/pages/HomeScreen';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
@@ -16,21 +22,23 @@ export default function App() {
 
   if (!fontsLoaded) {
     return (
-      <AppLoading />
+      <SafeAreaProvider>
+        <AppLoading />
+      </SafeAreaProvider>
     )
   } else {
     return (
-      <Login />
+
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
     );
   }
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

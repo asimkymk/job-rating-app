@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
-
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     return (
-        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 0 }}>
+        <View style={{ flex:1,justifyContent: 'center', alignItems: 'center', marginTop: 0 }}>
             <Image
                 style={styles.loginImage}
                 //blurRadius={3}
@@ -16,7 +15,7 @@ export default function Login() {
                 source={require('./../../assets/images/login.jpg')}
             />
             <View style={styles.overlay} />
-            <Text style={styles.headerText}>Cafe In</Text>
+            <Text style={styles.headerText}>İşli Yorum</Text>
 
             <View style={styles.container}>
 
@@ -64,7 +63,6 @@ export default function Login() {
 const styles = StyleSheet.create({
     loginImage: {
         height: 400,
-
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
@@ -75,9 +73,10 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: '#fff',
         fontFamily: 'Roboto-Bold',
-        paddingBottom: 150
+        paddingBottom: 450
     },
     container: {
+        flex:1,
         paddingTop: 40,
         marginTop: -30,
         width: '100%',
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderTopRightRadius: 40,
         borderTopLeftRadius: 40,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center'
 
     },
@@ -112,12 +111,12 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
     loginBtn: {
-        width: "80%",
+        width: "75%",
         borderRadius: 10,
         height: 50,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 10,
+        marginTop: 5,
         backgroundColor: "#a0bff5",
     },
     loginText: {
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     },
     registerBtn:{
         marginTop:10,
-        marginRight:40,
+        marginRight:50,
         alignSelf:'flex-end',
         
     },

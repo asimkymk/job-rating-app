@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
-export default function Login() {
+export default function Login({navigation}) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -48,7 +48,11 @@ export default function Login() {
                     inputType="password"
                 />
 
-                <TouchableOpacity style={styles.loginBtn}>
+                <TouchableOpacity style={styles.loginBtn}
+                onPress={() =>
+                    navigation.navigate('Home')
+                  }
+                >
                     <Text style={styles.loginText}>GİRİŞ</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.registerBtn}>

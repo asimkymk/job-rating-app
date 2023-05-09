@@ -5,8 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
 import JobCard from '../components/JobCard';
 export default function Home({ route }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [jobsData, setjobsData] = useState([]);
     const { data } = route.params; // kullanıcı bilgileri
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0, backgroundColor: '#fff', }}>

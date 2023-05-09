@@ -25,8 +25,6 @@ export default function Login({ navigation }) {
             setError(true);
             navigation.navigate('Home', { data: response.data.data });
         } catch (error) {
-            console.log(error); // Hata durumunda
-            console.log(false);
             setError(false)
         }
     };

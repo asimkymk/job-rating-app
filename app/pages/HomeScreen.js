@@ -4,9 +4,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
 import JobCard from '../components/JobCard';
-export default function Home() {
+export default function Home({ route }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { data } = route.params;
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0, backgroundColor: '#fff', }}>
             <View
@@ -17,7 +18,7 @@ export default function Home() {
 
             >
 
-                <Text style={styles.appBarTitle}>Ana Sayfa</Text></View>
+                <Text style={styles.appBarTitle}>Ana Sayfa - {data.name} {data.surname}</Text></View>
 
 
             <View style={styles.container}>

@@ -3,15 +3,33 @@ import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
+import axios from 'axios';
+
 export default function Login({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error,setError] = useState(true)
     function username_handler(text) {
         setUsername(text)
     }
     function password_handler(text) {
         setPassword(text)
     }
+    const handleButtonPress = async () => {
+        try {
+            const response = await axios.post('http://10.0.2.2:5000/user/login', {
+                "username": username,
+                "password": password
+            });
+
+            setError(true);
+            navigation.navigate('Home', { data: response.data.data });
+        } catch (error) {
+            console.log(error); // Hata durumunda
+            console.log(false);
+            setError(false)
+        }
+    };
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0 }}>
             <Image
@@ -56,12 +74,13 @@ export default function Login({ navigation }) {
                     }
                     inputType="password"
                 />
+                {error == false ? <View style={styles.errorBackground}>
+                    <Text style={styles.errorText}>Hatalı giriş. Lütfen bilgileri kontrol ederek tekrar deneyiniz</Text>
+                    </View>: null }
+                
 
                 <TouchableOpacity style={styles.loginBtn}
-                    onPress={() => {
-                        console.log(username)
-                        console.log(password)
-                        navigation.navigate('Home')}
+                    onPress={handleButtonPress
                     }
                 >
                     <Text style={styles.loginText}>GİRİŞ</Text>
@@ -150,5 +169,20 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#0644a3',
         fontFamily: 'Roboto-Regular'
-    }
+    },
+    errorBackground:{
+        width: "75%",
+        borderRadius: 10,
+        height: 50,
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 2,
+        marginBottom:10,
+        backgroundColor: "#FAA0A0",
+    },
+    errorText: {
+        color: '#4A0404',
+        fontSize: 12,
+        fontFamily: 'Roboto-Bold'
+    },
 });

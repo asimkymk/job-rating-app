@@ -41,12 +41,11 @@ def create_jobs_table(conn):
             CREATE TABLE IF NOT EXISTS jobs(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 employee_id INTEGER NOT NULL,
-                employer_id INTEGER NOT NULL,
                 title TEXT NOT NULL,
                 description TEXT,
+                status INTEGER NOT NULL,
                 createDate TEXT NOT NULL,
-                FOREIGN KEY (employee_id) REFERENCES users (id),
-                FOREIGN KEY (employer_id) REFERENCES users (id)
+                FOREIGN KEY (employee_id) REFERENCES users (id)
             );
         """)
         conn.commit()
@@ -87,13 +86,13 @@ def add_user(conn, username, password, email, name, surname, birth_year):
         return False
     return True
 
-def add_job(conn, employee_id, employer_id, title, description, create_date):
+def add_job(conn, employee_id, title, description,status, create_date):
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            INSERT INTO jobs(employee_id, employer_id, title, description, createDate)
-            VALUES(?, ?, ?, ?, ?)
-        """, (employee_id, employer_id, title, description, create_date))
+            INSERT INTO jobs(employee_id, title, description, status, createDate)
+            VALUES(?, ?, ?,?, ?)
+        """, (employee_id, title, description, int(status), create_date))
         conn.commit()
         print("Job added successfully")
     except Error as e:
@@ -126,12 +125,12 @@ def get_user(conn, username, password):
     else:
         return False
 
-def get_job(conn, user_id):
+def get_job(conn):
     try:
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT * FROM jobs WHERE employer_id = ? OR employee_id = ?;
-        """, (user_id,user_id,))
+            SELECT jobs.*, users.name, users.surname FROM jobs, users where users.id = jobs.employee_id;
+        """,)
         rows = cursor.fetchall()
         if rows:
             return rows

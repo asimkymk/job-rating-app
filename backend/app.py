@@ -70,34 +70,60 @@ def signup():
         hash_object = hashlib.md5(text_encoded)
         hex_dig = hash_object.hexdigest()
         if add_user(conn,request.json['username'],hex_dig,request.json['email'],request.json['name'],request.json['surname'],request.json['birthYear']):
-            return jsonify({'success': 'Signup successful!'}), 200
+            message = {
+            "message":"Success",
+            "data":"Signup proccess succesful."
+            }
+            return jsonify(message), 200
         else:
-            return jsonify({'error': 'Signup error!'}), 400
+            return jsonify({"message":"Error",'data': 'Signup error!'}), 400
     except:
-        return jsonify({'error': 'Database error!'}), 400
+        return jsonify({"message":"Error",'data': 'Database error!'}), 400
 
 @app.route('/job/add', methods=['POST'])
 def addjob():
     try:
 
-        if not request.json or not 'employee_id' in request.json or not 'employer_id' in request.json or not 'title' in request.json or not 'description' in request.json or not 'createDate' in request.json:
-            return jsonify({'error': 'Some fields are required'}), 400
+        if not request.json or not 'employee_id' in request.json or not 'title' in request.json or not 'description' in request.json or not 'status' in request.json or not 'createDate' in request.json:
+            return jsonify({"message":"Error",'data': 'Fields are required!'}), 400
         conn = create_connection()
-        if add_job(conn,request.json['employee_id'],request.json['employer_id'],request.json['title'],request.json['description'],request.json['createDate']):
-            return jsonify({'success': 'Job created succesfuly!'}), 200
+        if add_job(conn,request.json['employee_id'],request.json['title'],request.json['description'],request.json['status'],request.json['createDate']):
+            message = {
+            "message":"Success",
+            "data":"Creating job was succesful."
+            }
+            return jsonify(message), 200
         else:
-            return jsonify({'error': 'Creation error!'}), 400
-    except:
-        return jsonify({'error': 'Database error!'}), 400
+            return jsonify({"message":"Error",'data': 'Creation error!'}), 400
+    except Exception as e:
+        print(e)
+        return jsonify({"message":"Error",'data': 'Database error!'}), 400
 
-@app.route('/job/<int:employer_id>', methods=['GET'])
-def getjob(employer_id):
+@app.route('/job', methods=['GET'])
+def getjob():
     try:
         conn = create_connection()
-        rows = get_job(conn,employer_id)
-        return jsonify(rows), 200
+        rows = get_job(conn)
+        data = []
+        for i in rows:
+            temp = {
+                "id":i[0],
+                "employee_id":i[1],
+                "title":i[2],
+                "description":i[3],
+                "status":i[4],
+                "createDate":i[5],
+                "name":i[6],
+                "surname":i[7],
+            }
+            data.append(temp)
+        message = {
+            "message":"Success",
+            "data":data
+        }
+        return jsonify(message), 200
     except:
-        return jsonify({'error': 'Database error!'}), 400
+        return jsonify({"message":"Error",'error': 'Database error!'}), 400
 
 @app.route('/feedback/add', methods=['POST'])
 def addfeedback():

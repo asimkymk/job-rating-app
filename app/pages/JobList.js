@@ -10,7 +10,12 @@ const [jobs, setjobs] = useState([]);
         jobService.getAll().then
             (result => setjobs(result.data))
     }, [])
-
+const iconType = [
+    "checkmark-done-outline",
+    "close-outline",
+    "timer-outline",
+    "timer-outline"
+]
 export default function JobList() {
     return (
         <ScrollView style={{ marginLeft: 15, marginTop: -10, marginHorizontal: 20, alignSelf: 'baseline', width: '100%' }}>
@@ -19,7 +24,7 @@ export default function JobList() {
           key={job.id}
           icon={
             <Ionicons
-              name="checkmark-done-outline"
+              name={iconType[job.status]}
               size={25}
               color="#166ffe"
             />

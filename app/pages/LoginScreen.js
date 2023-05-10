@@ -87,7 +87,9 @@ export default function Login({ navigation }) {
 
                 <CustomButton text={"GİRİŞ"} onPress={handleButtonPress}></CustomButton>
 
-                <TouchableOpacity style={styles.registerBtn}>
+                <TouchableOpacity style={styles.registerBtn} onPress={() =>{
+                     navigation.navigate('Register');
+                }}>
                     <Text style={styles.registerText}>Hesabın mı yok? Kayıt Ol</Text>
                 </TouchableOpacity>
             </View>

@@ -4,6 +4,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
 import axios from 'axios';
+import CustomButton from '../components/CustomButton';
 
 export default function Login({ navigation }) {
     const [username, setUsername] = useState('');
@@ -76,13 +77,8 @@ export default function Login({ navigation }) {
                     <Text style={styles.errorText}>Hatalı giriş. Lütfen bilgileri kontrol ederek tekrar deneyiniz</Text>
                     </View>: null }
                 
-
-                <TouchableOpacity style={styles.loginBtn}
-                    onPress={handleButtonPress
-                    }
-                >
-                    <Text style={styles.loginText}>GİRİŞ</Text>
-                </TouchableOpacity>
+                <CustomButton text={"GİRİŞ"} onPress={handleButtonPress}></CustomButton>
+                
                 <TouchableOpacity style={styles.registerBtn}>
                     <Text style={styles.registerText}>Hesabın mı yok? Kayıt Ol</Text>
                 </TouchableOpacity>

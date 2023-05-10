@@ -125,7 +125,7 @@ def get_user(conn, username, password):
     else:
         return False
 
-def get_job(conn):
+def get_all_job(conn):
     try:
         cursor = conn.cursor()
         cursor.execute("""
@@ -138,7 +138,39 @@ def get_job(conn):
             return []
     except:
         return False
-    
+
+def get_job(conn,job_id):
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+           SELECT 
+    jobs.id AS "Job ID",
+    jobs.employee_id,
+    jobs.title,
+    jobs.description,
+    jobs.status,
+    jobs.createDate AS "Job Create Date",
+    users.name AS "Employee Name",
+    users.surname AS "Employee Surname",
+    feedbacks.id AS "Feedback ID",
+    feedbacks.rate,
+    feedbacks.comment,
+    feedbacks.createDate AS "Feedback Create Date",
+    feedback_user.name AS "Feedback User Name",
+    feedback_user.surname AS "Feedback User Surname"
+    FROM jobs
+    INNER JOIN users ON jobs.employee_id = users.id
+    LEFT JOIN feedbacks ON feedbacks.job_id = jobs.id
+    LEFT JOIN users AS feedback_user ON feedbacks.employer_id = feedback_user.id
+    WHERE jobs.id = ?;
+        """,(job_id,))
+        rows = cursor.fetchall()
+        if rows:
+            return rows
+        else:
+            return []
+    except:
+        return False
 def get_feedback(conn, job_id):
     cursor = conn.cursor()
     cursor.execute("""

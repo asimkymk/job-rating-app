@@ -100,10 +100,10 @@ def addjob():
         return jsonify({"message":"Error",'data': 'Database error!'}), 400
 
 @app.route('/job', methods=['GET'])
-def getjob():
+def getalljob():
     try:
         conn = create_connection()
-        rows = get_job(conn)
+        rows = get_all_job(conn)
         data = []
         for i in rows:
             temp = {
@@ -125,6 +125,40 @@ def getjob():
     except:
         return jsonify({"message":"Error",'error': 'Database error!'}), 400
 
+@app.route('/job/<int:job_id>', methods=['GET'])
+def getjob(job_id):
+    try:
+        conn = create_connection()
+        rows = get_job(conn,job_id=job_id)
+        i = rows[0]
+        job = {
+            "id":i[0],
+                "employee_id":i[1],
+                "title":i[2],
+                "description":i[3],
+                "status":i[4],
+                "createDate":i[5],
+                "name":i[6],
+                "surname":i[7],
+                "feedbacks":[]
+        }
+        for i in rows:
+            temp = {
+                "feeedback_id":i[8],
+                "rate":i[9],
+                "comment":i[10],
+                "createDate":i[11],
+                "name":i[12],
+                "surname":i[13],
+            }
+            job['feedbacks'].append(temp)
+        message = {
+            "message":"Success",
+            "data":job
+        }
+        return jsonify(message), 200
+    except:
+        return jsonify({"message":"Error",'error': 'Database error!'}), 400
 @app.route('/feedback/add', methods=['POST'])
 def addfeedback():
     try:

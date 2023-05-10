@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Home from './app/pages/HomeScreen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Register from './app/pages/RegisterScreen';
+import JobDetail from './app/pages/JobDetailScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name="JobDetail" component={JobDetail} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
     );

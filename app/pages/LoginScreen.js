@@ -5,26 +5,34 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
 import axios from 'axios';
 import CustomButton from '../components/CustomButton';
+import UserService from '../services/UserService';
 
 export default function Login({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error,setError] = useState(true)
+    const [error, setError] = useState(true)
     function username_handler(text) {
         setUsername(text)
     }
     function password_handler(text) {
         setPassword(text)
     }
+
+
     const handleButtonPress = async () => {
         try {
-            const response = await axios.post('http://10.0.2.2:5000/user/login', {
-                "username": username,
-                "password": password
-            });
-
-            setError(true);
-            navigation.navigate('Home', { data: response.data.data });
+            let userService = new UserService();
+            await userService.login(username,password).then
+                (result => {
+                    if(result == false){
+                        setError(false)
+                    }
+                    else{
+                        setError(true);
+                        navigation.navigate('Home', { data: result });
+                    }
+                })
+            
         } catch (error) {
             setError(false)
         }
@@ -75,10 +83,10 @@ export default function Login({ navigation }) {
                 />
                 {error == false ? <View style={styles.errorBackground}>
                     <Text style={styles.errorText}>Hatalı giriş. Lütfen bilgileri kontrol ederek tekrar deneyiniz</Text>
-                    </View>: null }
-                
+                </View> : null}
+
                 <CustomButton text={"GİRİŞ"} onPress={handleButtonPress}></CustomButton>
-                
+
                 <TouchableOpacity style={styles.registerBtn}>
                     <Text style={styles.registerText}>Hesabın mı yok? Kayıt Ol</Text>
                 </TouchableOpacity>
@@ -164,14 +172,14 @@ const styles = StyleSheet.create({
         color: '#0644a3',
         fontFamily: 'Roboto-Regular'
     },
-    errorBackground:{
+    errorBackground: {
         width: "75%",
         borderRadius: 10,
         height: 50,
         alignItems: "center",
         justifyContent: "center",
         marginTop: 2,
-        marginBottom:10,
+        marginBottom: 10,
         backgroundColor: "#FAA0A0",
     },
     errorText: {

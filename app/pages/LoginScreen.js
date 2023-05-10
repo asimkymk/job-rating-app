@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,8 +8,8 @@ import CustomButton from '../components/CustomButton';
 import UserService from '../services/UserService';
 
 export default function Login({ navigation }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('asimkymk');
+    const [password, setPassword] = useState('kanarya10.');
     const [error, setError] = useState(true)
     function username_handler(text) {
         setUsername(text)
@@ -17,84 +17,88 @@ export default function Login({ navigation }) {
     function password_handler(text) {
         setPassword(text)
     }
-
+    const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
 
     const handleButtonPress = async () => {
         try {
             let userService = new UserService();
-            await userService.login(username,password).then
+            await userService.login(username, password).then
                 (result => {
-                    if(result == false){
+                    if (result == false) {
                         setError(false)
                     }
-                    else{
+                    else {
                         setError(true);
                         navigation.navigate('Home', { data: result });
                     }
                 })
-            
+
         } catch (error) {
             setError(false)
         }
     };
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0 }}>
-            <Image
-                style={styles.loginImage}
-                //blurRadius={3}
-                //overlayColor={'rgba(0, 0, 255, .9)'}
-                source={require('./../../assets/images/login.jpg')}
-            />
-            <View style={styles.overlay} />
-            <Text style={styles.headerText}>İşli Yorum</Text>
-
-            <View style={styles.container}>
-
-                <Text style={styles.welcomeText}>Giriş Yap</Text>
-
-                <InputField
-                    onChangeText={text => username_handler(text)}
-                    label={'Kullanıcı adın'}
-                    //onChangeText={(username) => setUsername(username)}
-                    value={username}
-                    icon={
-                        <Ionicons
-                            name="person-outline"
-                            size={20}
-                            color="#666"
-                            style={{ marginRight: 5, }}
-                        />
-                    }
+       
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0 }}>
+                <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
+                <Image
+                    style={styles.loginImage}
+                    //blurRadius={3}
+                    //overlayColor={'rgba(0, 0, 255, .9)'}
+                    source={require('./../../assets/images/login.jpg')}
                 />
+                <View style={styles.overlay} />
+                <Text style={styles.headerText}>İşli Yorum</Text>
+                </KeyboardAvoidingView>
+                <View style={styles.container}>
 
-                <InputField
-                    onChangeText={text => password_handler(text)}
-                    value={password}
-                    label={'Şifren'}
-                    icon={
-                        <Ionicons
-                            name="ios-lock-closed-outline"
-                            size={20}
-                            color="#666"
-                            style={{ marginRight: 5 }}
-                        />
-                    }
-                    inputType="password"
-                />
-                {error == false ? <View style={styles.errorBackground}>
-                    <Text style={styles.errorText}>Hatalı giriş. Lütfen bilgileri kontrol ederek tekrar deneyiniz</Text>
-                </View> : null}
+                    <Text style={styles.welcomeText}>Giriş Yap</Text>
 
-                <CustomButton text={"GİRİŞ"} onPress={handleButtonPress}></CustomButton>
+                    <InputField
+                        onChangeText={text => username_handler(text)}
+                        label={'Kullanıcı adın'}
+                        //onChangeText={(username) => setUsername(username)}
+                        value={username}
+                        icon={
+                            <Ionicons
+                                name="person-outline"
+                                size={20}
+                                color="#666"
+                                style={{ marginRight: 5, }}
+                            />
+                        }
+                    />
 
-                <TouchableOpacity style={styles.registerBtn} onPress={() =>{
-                     navigation.navigate('Register');
-                }}>
-                    <Text style={styles.registerText}>Hesabın mı yok? Kayıt Ol</Text>
-                </TouchableOpacity>
+                    <InputField
+                        onChangeText={text => password_handler(text)}
+                        value={password}
+                        label={'Şifren'}
+                        icon={
+                            <Ionicons
+                                name="ios-lock-closed-outline"
+                                size={20}
+                                color="#666"
+                                style={{ marginRight: 5 }}
+                            />
+                        }
+                        inputType="password"
+                    />
+                    {error == false ? <View style={styles.errorBackground}>
+                        <Text style={styles.errorText}>Hatalı giriş. Lütfen bilgileri kontrol ederek tekrar deneyiniz</Text>
+                    </View> : null}
+
+                    <CustomButton text={"GİRİŞ"} onPress={handleButtonPress}></CustomButton>
+
+                    <TouchableOpacity style={styles.registerBtn} onPress={() => {
+                        navigation.navigate('Register');
+                    }}>
+                        <Text style={styles.registerText}>Hesabın mı yok? Kayıt Ol</Text>
+                    </TouchableOpacity>
+                </View>
+               
             </View>
-        </View>
-
+            
+        
     )
 }
 
@@ -111,7 +115,8 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: '#fff',
         fontFamily: 'Roboto-Bold',
-        paddingBottom: 450
+        marginTop:150,
+        marginLeft:175
     },
     container: {
         flex: 1,

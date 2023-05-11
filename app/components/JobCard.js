@@ -5,10 +5,11 @@ export default function JobCard({
     label,
     icon,
     title,
-    employee
+    employee,
+    onPress
 }) {
     return (
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={styles.cardIcon}>
                     {icon}

@@ -143,6 +143,8 @@ def getjob(job_id):
                 "feedbacks":[]
         }
         for i in rows:
+            if(i[8] == None):
+                continue
             temp = {
                 "feeedback_id":i[8],
                 "rate":i[9],

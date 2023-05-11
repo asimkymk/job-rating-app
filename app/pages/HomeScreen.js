@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
 import JobCard from '../components/JobCard';
 import JobList from '../modules/JobList';
-export default function Home({ route }) {
+export default function Home({ navigation,route }) {
     const [jobsData, setjobsData] = useState([]);
     const { data } = route.params; // kullanıcı bilgileri
     return (

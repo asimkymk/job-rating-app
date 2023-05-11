@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native';
 import JobCard from '../components/JobCard';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const iconType = [
     "hammer-outline",
@@ -12,6 +13,7 @@ const iconType = [
     "close-outline"
 ]
 export default function JobList() {
+  const navigation = useNavigation();
   const [jobs, setjobs] = useState([]);
     useEffect(() => {
         let jobService = new JobService();
@@ -23,6 +25,9 @@ export default function JobList() {
       {jobs.map(job => (
         <JobCard
           key={job.id}
+          onPress={() => {
+            navigation.navigate('JobDetail',{ data: job.id });
+        }}
           icon={
             <Ionicons
               name={iconType[job.status]}

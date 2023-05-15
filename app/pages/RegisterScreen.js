@@ -107,6 +107,8 @@ export default function Login({ navigation }) {
 
                 <InputField
                     label={'Doğum yılı '}
+                    
+                    inputType="Rate"
                     onChangeText={text => birthYear_handler(text)}
                     icon={
                         <Ionicons

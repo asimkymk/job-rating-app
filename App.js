@@ -9,7 +9,11 @@ import Home from './app/pages/HomeScreen';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import Register from './app/pages/RegisterScreen';
 import JobDetail from './app/pages/JobDetailScreen';
+import AddFeedback from './app/pages/AddFeedBack';
 const Stack = createNativeStackNavigator();
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './app/store/index';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -30,6 +34,7 @@ export default function App() {
     )
   } else {
     return (
+      <Provider store={store}>
 
         <NavigationContainer>
           <Stack.Navigator>
@@ -37,8 +42,11 @@ export default function App() {
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="JobDetail" component={JobDetail} options={{ headerShown: false }} />
+            <Stack.Screen name="AddFeedback" component={AddFeedback} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
+
+      </Provider>
     );
   }
 }

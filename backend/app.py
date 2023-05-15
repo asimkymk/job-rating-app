@@ -162,13 +162,12 @@ def getjob(job_id):
     except:
         return jsonify({"message":"Error",'data': 'Database error!'}), 400
 @app.route('/feedback/add', methods=['POST'])
-def addfeedback():
+def addfeedbacks():
     try:
-
         if not request.json or not 'job_id' in request.json or not 'employer_id' in request.json or not 'rate' in request.json or not 'comment' in request.json or not 'createDate' in request.json:
             jsonify({"message":"Error",'data': 'Some field(s) are missing!'}), 400
         conn = create_connection()
-        if add_feedback(conn,request.json['job_id'],request.json['employer_id'],int(request.json['rate']),request.json['comment'],request.json['createDate']):
+        if add_feedback(conn,int(request.json['job_id']),int(request.json['employer_id']),int(request.json['rate']),request.json['comment'],request.json['createDate']):
             message = {
             "message":"Success",
             "data":"Creating feedback was succesful."

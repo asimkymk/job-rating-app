@@ -5,41 +5,47 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import InputField from '../components/InputField';
 import JobCard from '../components/JobCard';
 import JobList from '../modules/JobList';
-export default function Home({ navigation,route }) {
+import { Provider } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+export default function Home({ navigation, route }) {
     const [jobsData, setjobsData] = useState([]);
     const { data } = route.params; // kullanıcı bilgileri
+
+    const userId = useSelector((state) => state.userId);
+    console.log(userId);
+
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0, backgroundColor: '#fff', }}>
-            <View
-                style={styles.appBarBackground}
-            //blurRadius={3}
-            //overlayColor={'rgba(0, 0, 255, .9)'}
-            //source={require('./../../assets/images/login.jpg')}
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0, backgroundColor: '#fff', }}>
+                <View
+                    style={styles.appBarBackground}
+                //blurRadius={3}
+                //overlayColor={'rgba(0, 0, 255, .9)'}
+                //source={require('./../../assets/images/login.jpg')}
 
-            >
-
-                <Text style={styles.appBarTitle}>Ana Sayfa - {data.name} {data.surname}</Text></View>
-
-
-            <View style={styles.container}>
-                <JobList></JobList>
-                
-                <TouchableOpacity
-                    style={styles.addButton}
                 >
-                    <Ionicons
-                        name="add-outline"
-                        size={30}
-                        color="#d8d8d8"
-                    />
-                </TouchableOpacity>
-            </View>
 
-        </View>
+                    <Text style={styles.appBarTitle}>Ana Sayfa - {data.name} {data.surname}</Text></View>
+
+
+                <View style={styles.container}>
+                    <JobList></JobList>
+
+                    <TouchableOpacity
+                        style={styles.addButton}
+                    >
+                        <Ionicons
+                            name="add-outline"
+                            size={30}
+                            color="#d8d8d8"
+                        />
+                    </TouchableOpacity>
+                </View>
+
+            </View>
 
     )
 }
-
 const styles = StyleSheet.create({
     appBarBackground: {
         backgroundColor: '#1a71fe',

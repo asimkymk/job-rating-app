@@ -3,7 +3,6 @@ import BaseService from "./BaseService";
 
 export default class UserService{
     async login(username,password){
-        console.log(BaseService.getHomePath())
         try {
             const response = await axios.post(BaseService.getHomePath()+ '/user/login', {
                 "username": username,

@@ -10,7 +10,6 @@ export default class FeedbackService {
             const year = today.getFullYear();
 
             const formattedDate = `${day}.${month}.${year}`;
-            console.log(formattedDate);
             const response = await axios.post(BaseService.getHomePath() + '/feedback/add', {
                 "job_id": job_id,
                 "employer_id": employer_id,

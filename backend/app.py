@@ -23,7 +23,7 @@ def createdatabase():
         close_connection(conn)
         return jsonify({'success': 'Succesfuly created!'}), 200
     except:
-        return jsonify({'error': 'Database error!'}), 400
+        return jsonify({"message":"Error",'data': 'Database error!'}), 400
 
 
 @app.route('/user/login', methods=['POST'])
@@ -55,7 +55,7 @@ def login():
         return jsonify((message)), 200
     except Exception as e:
         print(e)
-        return jsonify({'message': 'Error'}), 400
+        return jsonify({"message":"Error",'data': 'Database error!'}), 400
     
 
 @app.route('/user/signup', methods=['POST'])
@@ -63,7 +63,7 @@ def signup():
     try:
 
         if not request.json or not 'username' in request.json or not 'password' in request.json or not 'email' in request.json or not 'name' in request.json or not 'surname' in request.json or not "birthYear" in request.json:
-            return jsonify({'error': 'Some fields are required'}), 400
+            return jsonify({"message":"Error",'data': 'Some fields are missing!'}), 400
         conn = create_connection()
         password = request.json['password']
         text_encoded = password.encode('utf-8')
@@ -87,7 +87,7 @@ def addjob():
         if not request.json or not 'employee_id' in request.json or not 'title' in request.json or not 'description' in request.json or not 'status' in request.json or not 'createDate' in request.json:
             return jsonify({"message":"Error",'data': 'Fields are required!'}), 400
         conn = create_connection()
-        if add_job(conn,request.json['employee_id'],request.json['title'],request.json['description'],request.json['status'],request.json['createDate']):
+        if add_job(conn,request.json['employee_id'],request.json['title'],request.json['description'],int(request.json['status']),request.json['createDate']):
             message = {
             "message":"Success",
             "data":"Creating job was succesful."
@@ -123,7 +123,7 @@ def getalljob():
         }
         return jsonify(message), 200
     except:
-        return jsonify({"message":"Error",'error': 'Database error!'}), 400
+        return jsonify({"message":"Error",'data': 'Database error!'}), 400
 
 @app.route('/job/<int:job_id>', methods=['GET'])
 def getjob(job_id):
@@ -160,20 +160,24 @@ def getjob(job_id):
         }
         return jsonify(message), 200
     except:
-        return jsonify({"message":"Error",'error': 'Database error!'}), 400
+        return jsonify({"message":"Error",'data': 'Database error!'}), 400
 @app.route('/feedback/add', methods=['POST'])
 def addfeedback():
     try:
 
         if not request.json or not 'job_id' in request.json or not 'employer_id' in request.json or not 'rate' in request.json or not 'comment' in request.json or not 'createDate' in request.json:
-            return jsonify({'error': 'Some fields are required'}), 400
+            jsonify({"message":"Error",'data': 'Some field(s) are missing!'}), 400
         conn = create_connection()
-        if add_feedback(conn,request.json['job_id'],request.json['employer_id'],request.json['rate'],request.json['comment'],request.json['createDate']):
-            return jsonify({'success': 'Feedback created succesfuly!'}), 200
+        if add_feedback(conn,request.json['job_id'],request.json['employer_id'],int(request.json['rate']),request.json['comment'],request.json['createDate']):
+            message = {
+            "message":"Success",
+            "data":"Creating feedback was succesful."
+            }
+            return jsonify(message), 200
         else:
-            return jsonify({'error': 'Creation error!'}), 400
+            jsonify({"message":"Error",'data': 'Creation error!'}), 400
     except:
-        return jsonify({'error': 'Database error!'}), 400
+        jsonify({"message":"Error",'data': 'Database error!'}), 400
 
 @app.route('/feedback/<int:job_id>', methods=['GET'])
 def  getfeecback(job_id):

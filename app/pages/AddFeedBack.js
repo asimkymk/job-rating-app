@@ -40,7 +40,7 @@ export default function AddFeedback({ route }) {
     const handleButtonPress = async () => {
         try {
             let feedbackService = new FeedbackService();
-            await feedbackService.addFeedback(data,userId,rate, comment,"15.05.2023").then
+            await feedbackService.addFeedback(data,userId,rate, comment).then
                 (result => {
                     if (result == false) {
                         setError(false)

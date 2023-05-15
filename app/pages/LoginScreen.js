@@ -108,7 +108,7 @@ export default function Login({ navigation }) {
 
 const styles = StyleSheet.create({
     loginImage: {
-        height: 400,
+        height: 375,
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,

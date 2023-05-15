@@ -1,9 +1,11 @@
 import axios from "axios";
+import BaseService from "./BaseService";
 
 export default class UserService{
     async login(username,password){
+        console.log(BaseService.getHomePath())
         try {
-            const response = await axios.post('http://127.0.0.1:5000/user/login', {
+            const response = await axios.post(BaseService.getHomePath()+ '/user/login', {
                 "username": username,
                 "password": password
             });
@@ -15,7 +17,7 @@ export default class UserService{
 
     async register(firstName, lastName, username, email,password ,birthYear){    
         try {
-            const response = await axios.post('http://10.0.2.2:5000/user/signup', {
+            const response = await axios.post(BaseService.getHomePath()+ '/user/signup', {
                 "username": username,
                 "email": email,
                 "name": firstName,

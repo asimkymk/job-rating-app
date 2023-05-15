@@ -9,20 +9,37 @@ import UserService from '../services/UserService';
 
 export default function Login({ navigation }) {
     const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
     const [error, setError] = useState(true)
+    const [birthYear, setBirthYear] = useState('')
+
+    function birthYear_handler(text) {
+        setBirthYear(text)
+    }
+
     function username_handler(text) {
         setUsername(text)
     }
     function password_handler(text) {
         setPassword(text)
     }
-
+    function firstName_handler(text){
+        setFirstName(text)
+    }
+    function lastName_handler(text){
+        setLastName(text)
+    }
+    function email_handler(text){
+        setEmail(text)
+    }
 
     const handleButtonPress = async () => {
         try {
             let userService = new UserService();
-            await userService.login(username,password).then
+            await userService.register(firstName, lastName,username,email,password,birthYear).then
                 (result => {
                     if(result == false){
                         setError(false)
@@ -53,8 +70,56 @@ export default function Login({ navigation }) {
                 <Text style={styles.welcomeText}>Giriş Yap</Text>
 
                 <InputField
+                    label={'İsim'}
+                    onChangeText={text => firstName_handler(text)}
+                    icon={
+                        <Ionicons
+                            name="pricetag-outline"
+                            size={20}
+                            style={{paddingRight:5}}
+                        />
+                    }
+                />
+
+                <InputField
+                    label={'Soyisim'}
+                    onChangeText={text => lastName_handler(text)}
+                    icon={
+                        <Ionicons
+                            name="pricetag-outline"
+                            size={20}
+                            style={{paddingRight:5}}
+                        />
+                    }
+                />
+
+                <InputField
+                    label={'Email'}
+                    onChangeText={text => email_handler(text)}
+                    icon={
+                        <Ionicons
+                            name="mail-open-outline"
+                            size={20}
+                            style={{paddingRight:5}}
+                        />
+                    }
+                />
+
+                <InputField
+                    label={'Doğum yılı '}
+                    onChangeText={text => birthYear_handler(text)}
+                    icon={
+                        <Ionicons
+                            name="calendar-outline"
+                            size={20}
+                            style={{paddingRight:5}}
+                        />
+                    }
+                />
+
+                <InputField
                     onChangeText={text => username_handler(text)}
-                    label={'Kullanıcı adın'}
+                    label={'Kullanıcı adı'}
                     //onChangeText={(username) => setUsername(username)}
                     value={username}
                     icon={
@@ -68,16 +133,15 @@ export default function Login({ navigation }) {
                 />
 
                 <InputField
+                    label={'Şifre'}
                     onChangeText={text => password_handler(text)}
-                    value={password}
-                    label={'Şifren'}
                     icon={
                         <Ionicons
                             name="ios-lock-closed-outline"
                             size={20}
                             color="#666"
                             style={{ marginRight: 5 }}
-                        />
+                            />
                     }
                     inputType="password"
                 />
@@ -85,12 +149,12 @@ export default function Login({ navigation }) {
                     <Text style={styles.errorText}>Hatalı giriş. Lütfen bilgileri kontrol ederek tekrar deneyiniz</Text>
                 </View> : null}
 
-                <CustomButton text={"GİRİŞ"} onPress={handleButtonPress}></CustomButton>
+                <CustomButton text={"KAYIT OL"} onPress={handleButtonPress}></CustomButton>
 
                 <TouchableOpacity style={styles.registerBtn} onPress={() =>{
                      navigation.navigate('Register');
                 }}>
-                    <Text style={styles.registerText}>Hesabın mı yok? Kayıt Ol</Text>
+                    <Text style={styles.registerText}>Hesabım var</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -100,7 +164,7 @@ export default function Login({ navigation }) {
 
 const styles = StyleSheet.create({
     loginImage: {
-        height: 400,
+        height: 300,
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,

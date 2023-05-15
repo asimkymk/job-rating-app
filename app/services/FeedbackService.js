@@ -1,9 +1,10 @@
 import axios from "axios";
+import BaseService from "./BaseService";
 
 export default class FeedbackService{
     async addFeedback(job_id,employer_id,rate,comment,createDate){
         try {
-            const response = await axios.post('http://127.0.0.1:5000/feedback/add', {
+            const response = await axios.post(BaseService.getHomePath()+ '/feedback/add', {
                 "job_id": job_id,
                 "employer_id": employer_id,
                 "rate": rate,

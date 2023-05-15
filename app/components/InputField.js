@@ -34,7 +34,26 @@ export default function InputField({
           style={{ flex: 1, paddingVertical: 0 }}
           secureTextEntry={true}
         />
-      ) : (
+      ) : 
+      inputType == 'Comment' ? (
+        <TextInput
+          onChangeText={onChangeText}
+          value={value}
+          placeholder={label}
+          keyboardType={keyboardType}
+          style={{ flex: 1, paddingVertical: 0 }}
+        />
+      ):
+      inputType == 'Rate' ? (
+        <TextInput
+          onChangeText={onChangeText}
+          value={value}
+          placeholder={label}
+          keyboardType='numeric'
+          style={{ flex: 1, paddingVertical: 0}}
+        />
+      ):
+      (
         <TextInput
           onChangeText={onChangeText}
           value={value}

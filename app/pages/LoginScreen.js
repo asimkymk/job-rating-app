@@ -6,8 +6,11 @@ import InputField from '../components/InputField';
 import axios from 'axios';
 import CustomButton from '../components/CustomButton';
 import UserService from '../services/UserService';
+import { useDispatch } from 'react-redux';
+import { setUserId } from '../modules/UserReducer';
 
 export default function Login({ navigation }) {
+    const dispatch = useDispatch();
     const [username, setUsername] = useState('asimkymk');
     const [password, setPassword] = useState('kanarya10.');
     const [error, setError] = useState(true)
@@ -29,6 +32,7 @@ export default function Login({ navigation }) {
                     }
                     else {
                         setError(true);
+                        dispatch(setUserId(result.id));
                         navigation.navigate('Home', { data: result });
                     }
                 })

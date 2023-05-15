@@ -4,10 +4,11 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import JobService from '../services/JobService';
 import JobDetailCard from '../components/JobDetailCard';
 import FeedbackCard from '../components/FeedbackCard';
+import { useNavigation } from '@react-navigation/native';
 
 export default function JobDetail({ route }) {
-  const { data } = route.params; // kullanıcı bilgileri
-
+  const { data } = route.params; 
+  const navigation = useNavigation();
   const [job, setJob] = useState({});
   const [feedbacks, setFeedbacks] = useState([]);
   const [error, setError] = useState(true);
@@ -89,7 +90,9 @@ export default function JobDetail({ route }) {
         </ScrollView>
         <TouchableOpacity
           style={styles.addButton}
+          onPress={()=>{navigation.navigate('AddFeedback',{ data: job.id }) }}
         >
+
           <Ionicons
             name="add-outline"
             size={30}

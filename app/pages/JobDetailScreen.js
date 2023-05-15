@@ -66,6 +66,11 @@ export default function JobDetail({ route }) {
         <Text style={styles.sectionTitle}>Geri Dönüşler</Text>
 
         <ScrollView style={{ marginLeft: 15, marginTop: 0, marginHorizontal: 20, alignSelf: 'baseline', width: '100%' }}>
+          {feedbacks.length == 0 ? <View style={styles.errorBackground}>
+                        <Text style={styles.errorText}>Bu işe henüz geri dönüş eklenmemiş.</Text>
+                    </View> 
+          
+          : null}
           {feedbacks.map(item => (
             <FeedbackCard
               key={item.feeedback_id}
@@ -158,6 +163,22 @@ const styles = StyleSheet.create({
     alignSelf:'flex-start',
     marginLeft:20,
 
-  }
+  },
+  
+  errorBackground: {
+    width: "90%",
+    borderRadius: 10,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 2,
+    marginBottom: 10,
+    backgroundColor: "lightgreen",
+},
+errorText: {
+    color: 'green',
+    fontSize: 12,
+    fontFamily: 'Roboto-Bold'
+},
 
 });

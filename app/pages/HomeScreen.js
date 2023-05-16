@@ -33,6 +33,7 @@ export default function Home({ navigation, route }) {
 
                     <TouchableOpacity
                         style={styles.addButton}
+                        onPress={()=>{navigation.navigate('AddJob' ) }}
                     >
                         <Ionicons
                             name="add-outline"

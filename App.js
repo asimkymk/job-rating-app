@@ -14,6 +14,8 @@ const Stack = createNativeStackNavigator();
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './app/store/index';
+import AddJob from './app/pages/AddJob';
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -43,6 +45,7 @@ export default function App() {
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="JobDetail" component={JobDetail} options={{ headerShown: false }} />
             <Stack.Screen name="AddFeedback" component={AddFeedback} options={{ headerShown: false }} />
+            <Stack.Screen name="AddJob" component={AddJob} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
 

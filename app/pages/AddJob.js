@@ -8,13 +8,19 @@ import InputField from '../components/InputField';
 import CustomButton from '../components/CustomButton';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-
+import SelectDropdown from 'react-native-select-dropdown'
+const statusTypes = [
+    "Yapılacak",
+    "Yapılıyor",
+    "Yapıldı",
+    "İptal Edildi"
+]
 export default function AddJob({ route }) {
 
-   
+
     const [error, setError] = useState(true);
-    const [title, setTitle] = useState('2');
-    const [description, setDescription] = useState('İş ekle');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
     const [status, setStatus] = useState('');
     const userId = useSelector((state) => state.userId);
     const navigation = useNavigation();
@@ -43,7 +49,7 @@ export default function AddJob({ route }) {
     const handleButtonPress = async () => {
         try {
             let jobService = new JobService();
-            await jobService.addJob(userId,title,description,status).then
+            await jobService.addJob(userId, title, description, status).then
                 (result => {
                     if (result == false) {
                         setError(false)
@@ -59,67 +65,93 @@ export default function AddJob({ route }) {
             setError(false)
         }
     };
-    
+
     return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0, backgroundColor: '#fff', }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0, backgroundColor: '#fff', }}>
+            <View
+                style={styles.appBarBackground}
+
+            >
+
+                <Text style={styles.appBarTitle}>İş Ekle</Text>
+
+            </View>
+            <View style={styles.container} >
+
                 <View
-                    style={styles.appBarBackground}
+                    style={{
+                        flexDirection: 'row',
+                        borderBottomColor: '#ccc',
+                        borderBottomWidth: 2,
+                        paddingBottom: 4,
+                        marginBottom: 25,
+                        alingSelf: 'center',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: "70%",
+                    }}>
+                    <Ionicons
+                        name='stopwatch-outline'
+                        size={20}
+                        color="#666"
+                        style={{ marginRight: 5 }}
+                    ></Ionicons>
+                    <SelectDropdown
+                        buttonStyle={{ flex: 1, paddingVertical: 0, borderRadius:5, fontSize:5 }}
+                        rowTextStyle={{fontSize:16}}
+                        buttonTextStyle={{fontSize:16,position:'absolute',right:0,margin:0}}
+                        defaultButtonText={'Bir durum seçiniz'}
+                        data={statusTypes}
+                        onSelect={(selectedItem, index) => {
+                            Status_handler(index)
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            Status_handler(index)
+                            // text represented after item is selected
+                            // if data array is an array of objects then return selectedItem.property to render after item is selected
+                            return selectedItem
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            Status_handler(index)
+                            // text represented for each item in dropdown
+                            // if data array is an array of objects then return item.property to represent item in dropdown
+                            return item
+                        }}
+                    /></View>
 
-                >
+                <InputField
+                    onChangeText={text => Title_handler(text)}
+                    value={title}
+                    
+                    label={'İş başlığı giriniz'}
+                    icon={
+                        <Ionicons
+                            name="pencil-outline"
+                            size={20}
+                            color="#666"
+                            style={{ marginRight: 5 }}
+                        />
+                    }
 
-                    <Text style={styles.appBarTitle}>İş Ekle</Text>
+                />
+                <InputField
+                    onChangeText={text => Description_handler(text)}
+                    value={description}
+                    label={'İş açıklaması giriniz'}
+                    icon={
+                        <Ionicons
+                            name="pencil-outline"
+                            size={20}
+                            color="#666"
+                            style={{ marginRight: 5 }}
+                        />
+                    }
 
-                </View>
-                <View style={styles.container} >
+                />
 
-                    <InputField
-                        onChangeText={text => Title_handler(text)}
-                        label={'Başlık'}
-                        //onChangeText={(Rate) => setRate(Rate)}
-                        value={title}
-                        icon={
-                            <Ionicons
-                                name="star-outline"
-                                size={20}
-                                color="#666"
-                                style={{ marginRight: 5, }}
-                            />
-                        }
-                       
-                    />
-
-                    <InputField
-                        onChangeText={text => Description_handler(text)}
-                        value={description}
-                        label={'Açıklama'}
-                        icon={
-                            <Ionicons
-                                name="pencil-outline"
-                                size={20}
-                                color="#666"
-                                style={{ marginRight: 5 }}
-                            />
-                        }
-                        
-                    />
-                    <InputField
-                        onChangeText={text => Status_handler(text)}
-                        value={status}
-                        label={'durum'}
-                        icon={
-                            <Ionicons
-                                name="pencil-outline"
-                                size={20}
-                                color="#666"
-                                style={{ marginRight: 5 }}
-                            />
-                        }
-                        
-                    />
-
-                    <CustomButton text={"İş ekle"} onPress={handleButtonPress}></CustomButton>
-                </View>
-            </View >
+                <CustomButton text={"İş ekle"} onPress={handleButtonPress}></CustomButton>
+            </View>
+        </View >
     );
 }
 

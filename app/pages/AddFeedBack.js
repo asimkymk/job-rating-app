@@ -14,8 +14,8 @@ export default function AddFeedback({ route }) {
     const data = route.params.data;
     const [feedbacks, setFeedbacks] = useState([]);
     const [error, setError] = useState(true);
-    const [rate, setRate] = useState('2');
-    const [comment, setComment] = useState('Guzel Bir Yorum');
+    const [rate, setRate] = useState('');
+    const [comment, setComment] = useState('');
     const userId = useSelector((state) => state.userId);
     const navigation = useNavigation();
 

@@ -87,6 +87,7 @@ def addjob():
         if not request.json or not 'employee_id' in request.json or not 'title' in request.json or not 'description' in request.json or not 'status' in request.json or not 'createDate' in request.json:
             return jsonify({"message":"Error",'data': 'Fields are required!'}), 400
         conn = create_connection()
+        print(request.json)
         if add_job(conn,request.json['employee_id'],request.json['title'],request.json['description'],int(request.json['status']),request.json['createDate']):
             message = {
             "message":"Success",

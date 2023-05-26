@@ -22,10 +22,22 @@ export default function Home({ navigation, route }) {
                 //blurRadius={3}
                 //overlayColor={'rgba(0, 0, 255, .9)'}
                 //source={require('./../../assets/images/login.jpg')}
+                //<TouchableOpacity style={{alignSelf:"flex-end",right:25, bottom:24}}>
+                //<Ionicons
+                //name="stats-chart-outline"
+                //size={20}
+                //color="white"
+        ///>
+        
+        //</TouchableOpacity>
 
                 >
 
-                    <Text style={styles.appBarTitle}>Ana Sayfa - {data.name} {data.surname}</Text></View>
+                    <Text style={styles.appBarTitle}>Ana Sayfa - {data.name} {data.surname} </Text>
+                    
+                    
+                    </View>
+                    
 
 
                 <View style={styles.container}>

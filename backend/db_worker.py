@@ -129,7 +129,14 @@ def get_all_job(conn):
     try:
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT jobs.*, users.name, users.surname FROM jobs, users where users.id = jobs.employee_id;
+        SELECT jobs.*,
+       users.name,
+       users.surname,
+       AVG(feedbacks.rate) AS average_rate
+        FROM jobs
+        LEFT JOIN feedbacks ON jobs.id = feedbacks.job_id
+        INNER JOIN users ON jobs.employee_id = users.id
+        GROUP BY jobs.id;
         """,)
         rows = cursor.fetchall()
         if rows:

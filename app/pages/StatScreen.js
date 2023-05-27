@@ -8,56 +8,43 @@ import JobList from '../modules/JobList';
 import { Provider } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-export default function Home({ navigation, route }) {
+export default function Stat({ navigation, route }) {
     const [jobsData, setjobsData] = useState([]);
-    const { data } = route.params; // kullanıcı bilgileri
 
     const userId = useSelector((state) => state.userId);
     console.log(userId);
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0, backgroundColor: '#fff', }}>
-            <View
-                style={styles.appBarBackground}
-            //blurRadius={3}
-            //overlayColor={'rgba(0, 0, 255, .9)'}
-            //source={require('./../../assets/images/login.jpg')}
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 0, backgroundColor: '#fff', }}>
+                <View
+                    style={styles.appBarBackground}
+                //blurRadius={3}
+                //overlayColor={'rgba(0, 0, 255, .9)'}
+                //source={require('./../../assets/images/login.jpg')}
+                //<TouchableOpacity style={{alignSelf:"flex-end",right:25, bottom:24}}>
+                //<Ionicons
+                //name="stats-chart-outline"
+                //size={20}
+                //color="white"
+        ///>
+        
+        //</TouchableOpacity>
 
-
-            >
-
-                <Text style={styles.appBarTitle}>Ana Sayfa - {data.name} {data.surname} </Text>
-                <TouchableOpacity style={{ alignSelf: "flex-end", right: 25, bottom: 24 }}
-                onPress={() => { navigation.navigate('Stat') }}
                 >
-                    <Ionicons
-                        name="stats-chart-outline"
-                        size={20}
-                        color="white"
-                    />
 
-                </TouchableOpacity>
+                    <Text style={styles.appBarTitle}>İstatistikler </Text>
+                    
+                    
+                    </View>
+                    
+
+
+                <View style={styles.container}>
+                    <JobList status={true}></JobList>
+
+                </View>
 
             </View>
-
-
-
-            <View style={styles.container}>
-                <JobList></JobList>
-
-                <TouchableOpacity
-                    style={styles.addButton}
-                    onPress={() => { navigation.navigate('AddJob') }}
-                >
-                    <Ionicons
-                        name="add-outline"
-                        size={30}
-                        color="#d8d8d8"
-                    />
-                </TouchableOpacity>
-            </View>
-
-        </View>
 
     )
 }

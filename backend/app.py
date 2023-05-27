@@ -5,7 +5,7 @@ from db_worker import *
 import hashlib
 from flask_jwt import JWT, jwt_required, current_identity
 from models import *
-
+import math
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 CORS(app) #comment this on deployment
 api = Api(app)
@@ -107,23 +107,41 @@ def getalljob():
         rows = get_all_job(conn)
         data = []
         for i in rows:
-            temp = {
-                "id":i[0],
-                "employee_id":i[1],
-                "title":i[2],
-                "description":i[3],
-                "status":i[4],
-                "createDate":i[5],
-                "name":i[6],
-                "surname":i[7],
-            }
+            if i[8] == None:
+
+                temp = {
+                    "id":i[0],
+                    "employee_id":i[1],
+                    "title":i[2],
+                    "description":i[3],
+                    "status":i[4],
+                    "createDate":i[5],
+                    "name":i[6],
+                    "surname":i[7],
+                    
+                    "average_rate":0
+                }
+            else:
+                temp = {
+                    "id":i[0],
+                    "employee_id":i[1],
+                    "title":i[2],
+                    "description":i[3],
+                    "status":i[4],
+                    "createDate":i[5],
+                    "name":i[6],
+                    "surname":i[7],
+                    
+                    "average_rate":round(i[8],2)
+                }
             data.append(temp)
         message = {
             "message":"Success",
             "data":data
         }
         return jsonify(message), 200
-    except:
+    except Exception as e:
+        print(e)
         return jsonify({"message":"Error",'data': 'Database error!'}), 400
 
 @app.route('/job/<int:job_id>', methods=['GET'])

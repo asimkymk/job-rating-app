@@ -9,23 +9,42 @@ export default function JobCard({
     onPress,
     average_rate
 }) {
-    return (
-        <TouchableOpacity style={styles.card} onPress={onPress}>
-            <View style={{ flexDirection: 'row' }}>
-                <View style={styles.cardIcon}>
-                    {icon}
-                </View >
-                <View style={{ flexDirection: 'column', marginLeft: 15 }}>
-                    <Text style={styles.titleText}>{title}</Text>
-                    <Text style={styles.employeeText}>{employee}</Text>
+    if (average_rate){
+        return (
+            <TouchableOpacity style={styles.card} onPress={onPress}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.cardIcon}>
+                        {icon}
+                    </View >
+                    <View style={{ flexDirection: 'column', marginLeft: 15 }}>
+                        <Text style={styles.titleText}>{title}</Text>
+                        <Text style={styles.employeeText}>{employee}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'column', position:'absolute',right:0 }}>
+                    <Text style={styles.titleText}>Ort. Puan</Text>
+                        <Text style={styles.rateText}>{average_rate}</Text>
+                    </View>
                 </View>
-                <View style={{ flexDirection: 'column', position:'absolute',right:0 }}>
-                <Text style={styles.titleText}>Ort. Puan</Text>
-                    <Text style={styles.rateText}>{average_rate}</Text>
+            </TouchableOpacity>
+        );
+    }
+    else{
+        return (
+            <TouchableOpacity style={styles.card} onPress={onPress}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.cardIcon}>
+                        {icon}
+                    </View >
+                    <View style={{ flexDirection: 'column', marginLeft: 15 }}>
+                        <Text style={styles.titleText}>{title}</Text>
+                        <Text style={styles.employeeText}>{employee}</Text>
+                    </View>
+                    
                 </View>
-            </View>
-        </TouchableOpacity>
-    );
+            </TouchableOpacity>
+        );
+    }
+    
 }
 const styles = StyleSheet.create({
     card: {
